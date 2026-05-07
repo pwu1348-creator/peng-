@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mr. Peng | 个人主页</title>
+  <title>ShiPeng | 个人主页</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -87,7 +88,7 @@
         <label for="qmotto">你的口头禅</label>
         <input type="text" id="qmotto" maxlength="20" placeholder="一句装逼语录..." autocomplete="off">
         <span class="q-tip">来一句你天天挂嘴边的人生金句。</span>
-        <button id="goMainBtn" class="q-next-btn q-enter-btn">进入 Mr.Peng 的世界 ›</button>
+        <button id="goMainBtn" class="q-next-btn q-enter-btn">进入 ShiPeng 的世界 ›</button>
       </div>
     </div>
 
@@ -105,7 +106,7 @@
 
     <!-- 顶部导航 -->
     <nav class="main-nav" id="mainNav">
-      <span class="nav-brand">Mr. Peng</span>
+      <span class="nav-brand">ShiPeng</span>
       <ul class="nav-links">
         <li><a href="#about">关于我</a></li>
         <li><a href="#hobbies">爱好性格</a></li>
@@ -116,27 +117,29 @@
 
     <!-- 英雄区域 -->
     <section class="hero" id="hero">
-      <video class="hero-video" src="video/intro2.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <div class="hero-video" style="background-image: url('img/bg-q5.jpg'); background-size: cover; background-position: center;"></div>
       <div class="hero-bg"></div>
-      <div class="hero-content">
-        <h1 class="hero-title">一身清风两袖墨<br>半壶浊酒笑人生</h1>
-        <p class="hero-sub">欢迎来到 Mr. Peng 的个人世界</p>
-        <div class="hero-visitor" id="heroVisitor"></div>
-      </div>
       <div class="hero-scroll-hint">↓ 向下探索 ↓</div>
     </section>
 
-    <!-- 板块一：关于 Mr. Peng -->
+    <!-- 欢迎语 -->
+    <div class="welcome-banner">
+      <p>欢迎来到 ShiPeng 的个人世界</p>
+    </div>
+
+    <!-- 板块一：关于 ShiPeng -->
     <section class="panel" id="about">
       <div class="panel-inner">
-        <h2 class="panel-title">关于 Mr. Peng</h2>
+        <h2 class="panel-title">关于 ShiPeng</h2>
         <div class="panel-body about-body">
           <div class="about-avatar">🐧</div>
           <div class="about-text">
-            <p class="about-lead">你好，我是 Mr. Peng —— 一只试图用代码驯服世界，却经常被 bug 反杀的理想主义程序猿。</p>
-            <p>毕业于「熬夜大学·计算机秃头专业」，主修和 AI 聊天、跟 GPU 讨价还价、以及如何在 StackOverflow 上优雅地复制粘贴。Currently，正在一家科技公司做 AI 相关的事情，日常就是调参、等训练、再调参、再等训练……循环往复，乐此不疲（大概吧）。</p>
-            <p>技术栈：Python 是母语，Java 是方言，C++ 是那种过年才见一次的远房亲戚。擅长把大模型装进小显存，也擅长在深夜对着报错日志发呆。坚信「只要能跑就别动它」和「代码和人，有一个能跑就行」这两条编程真理。</p>
-            <p>不写代码的时候，你大概率能在羽毛球场、某个旅游景点、或者游戏里找到我。人生信条：<em>Work hard, play harder, and let the GPU do the rest.</em></p>
+            <p class="about-lead">我是 ShiPeng，一枚热爱生活的理想主义玩家 😜</p>
+            <p>毕业于 B 站终身函授大学，主修全网冲浪、云学各种技能，副业持证上岗 —— 抖音深度专业评价人员，人间真实观察员。</p>
+            <p>本职是 AI 大模型应用开发，但不爱聊枯燥技术日常。只会默默琢磨怎么把好玩好用的 AI 落地到生活里，主打一个低调搞技术、高调享生活。</p>
+            <p>技术方面随缘拿捏，擅长玩转新的AI技术，也习惯偶尔深夜放空发呆，不卷不焦虑。</p>
+            <p>空余时间行踪固定：羽毛球场上挥洒汗水、到处旅行打卡看风景、宅家沉浸游戏世界。</p>
+            <p>人生信条：<em>认真生活，尽兴玩乐，随心度日。</em></p>
           </div>
         </div>
       </div>
@@ -224,48 +227,14 @@
       </div>
     </section>
 
-    <!-- 板块四：个人成果与项目经历 -->
+    <!-- 板块四：项目成果与个人经历 -->
     <section class="panel panel-alt" id="projects">
       <div class="panel-inner">
         <h2 class="panel-title">项目成果与经历</h2>
         <div class="panel-body projects-body">
-
-          <!-- 项目卡片 -->
-          <div class="proj-category">
-            <h3>🚀 技术项目</h3>
-            <div class="proj-cards">
-              <div class="proj-card">
-                <h4>RAG 智能问答系统</h4>
-                <div class="proj-video-placeholder">
-                  <!-- 后期替换为B站嵌入代码 -->
-                  <span>B站视频嵌入区域</span>
-                </div>
-                <p>项目简介：基于大语言模型的检索增强生成系统，实现智能文档问答。</p>
-                <div class="proj-tags">
-                  <span>Python</span><span>LangChain</span><span>向量数据库</span>
-                </div>
-              </div>
-              <div class="proj-card">
-                <h4>项目名称二</h4>
-                <div class="proj-video-placeholder">
-                  <span>项目截图或视频区域</span>
-                </div>
-                <p>项目简介：这里描述你的第二个项目。</p>
-                <div class="proj-tags">
-                  <span>技术标签</span><span>技术标签</span>
-                </div>
-              </div>
-              <div class="proj-card">
-                <h4>项目名称三</h4>
-                <div class="proj-video-placeholder">
-                  <span>项目截图或视频区域</span>
-                </div>
-                <p>项目简介：这里描述你的第三个项目。</p>
-                <div class="proj-tags">
-                  <span>技术标签</span><span>技术标签</span>
-                </div>
-              </div>
-            </div>
+          <div class="proj-buttons">
+            <button class="proj-btn proj-btn-left" id="btnProjects">项目成果</button>
+            <button class="proj-btn proj-btn-right" id="btnExperience">个人经历</button>
           </div>
 
           <!-- 特别感谢 -->
@@ -299,23 +268,58 @@
       <div class="footer-links">
         <div class="footer-item">
           <span class="footer-icon">📧</span>
-          <span>邮箱：// your@email.com</span>
+          <span>邮箱：1059421624@qq.com</span>
         </div>
         <div class="footer-item">
           <span class="footer-icon">💬</span>
-          <span>微信：// your_wechat</span>
-        </div>
-        <div class="footer-item">
-          <span class="footer-icon">🐙</span>
-          <a href="#" target="_blank">GitHub：// your_github</a>
-        </div>
-        <div class="footer-item">
-          <span class="footer-icon">🔗</span>
-          <span>其它：// 小红书 / 知乎 / B站 等</span>
+          <span>微信：13133642282</span>
         </div>
       </div>
-      <p class="footer-copy">© 2026 Mr. Peng — 用代码和脚步丈量世界</p>
+      <p class="footer-copy">© 2026 ShiPeng — 用代码和脚步丈量世界</p>
     </footer>
+  </div>
+
+  <!-- ==================== 弹窗：项目成果 ==================== -->
+  <div class="modal-overlay" id="modalProjects">
+    <div class="modal-box modal-letter">
+      <button class="modal-close" data-close="modalProjects">&times;</button>
+      <h3 class="modal-title">项目成果</h3>
+      <div class="modal-body">
+        <div class="modal-project-list">
+          <div class="modal-project-item">
+            <span class="modal-project-label">项目一</span>
+            <span class="modal-project-url">（待添加）</span>
+          </div>
+          <div class="modal-project-item">
+            <span class="modal-project-label">项目二</span>
+            <span class="modal-project-url">（待添加）</span>
+          </div>
+          <div class="modal-project-item">
+            <span class="modal-project-label">项目三</span>
+            <span class="modal-project-url">（待添加）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 弹窗：个人经历 ==================== -->
+  <div class="modal-overlay" id="modalExperience">
+    <div class="modal-box modal-letter">
+      <button class="modal-close" data-close="modalExperience">&times;</button>
+      <h3 class="modal-title">个人经历</h3>
+      <div class="modal-body">
+        <div class="modal-essay">
+          <p>本人 ShiPeng，02年出厂，身高精准拿捏1800mm（说180cm太普通，主打一个严谨），体重多重buff叠加——70kg＝140斤＝70000克，标准匀称身材，不胖不瘦，主打一个穿衣显瘦、打球有劲。籍贯江西九江浔阳区，原开发区土著，算是半个"九江土著显眼包"，家庭条件主打一个"薛定谔"，不详但够用，毕竟有三大后盾保驾护航：严厉到能瞬间拿捏我的老爸、永远温柔祥和的老妈，还有把我宠上天、什么好东西都往我手里塞的奶奶，幸福感直接拉满。</p>
+          <p>从小自带"社交牛X症"，朋友多到数不过来，走在老家街上，三步一个熟人，五步一个发小，主打一个"桃李满浔阳"。上学期间也算半个"偏科小天才"，小学数学好到能帮老师验算作业，初中成绩也稳扎稳打，唯独英语是我的"一生之敌"，从初中摆烂到大学，四级考了七次，每次都差那么一点点，主打一个"重在参与"，不过没关系，相信未来总会和四级"和解"（flag先立在这）。</p>
+          <p>高中算是我人生的"瓶颈期"，身边的同学个个都是卷王，聪明又努力，反观我自己，主打一个"笨鸟先飞"，别人一遍就会的知识点，我得反复琢磨好几遍，好在后天够拼，没被甩太远，最后成功上岸普通二本，主打一个"逆袭不彻底，但够用"。</p>
+          <p>目前单身贵族一枚，没什么感情烦恼，主打一个"快乐自由"。性格是enfj主角人格，自带"社交发动机"属性，只要有朋友在，就忍不住主动拉人出去玩，至于去哪玩、吃什么，我一概随缘，主打一个"主谋但不决策"，省心又快乐。</p>
+          <p>现在在南京打拼，从事大模型应用开发，工作之余不卷不躺，凭着兴趣自己捣鼓了专属rag和agent，纯纯为爱发电，不强求变现，主打一个"玩得开心"。平时的爱好很简单：有空就去旅游，打卡各地美景；约上朋友打羽毛球，挥洒汗水；没事就给家里人和朋友打打电话，唠唠家常，主打一个"烟火气拉满"。</p>
+          <p>最值得强调的是，我的抗压能力绝非空谈，而是经受过千锤百炼的硬核实力，再加之ENFJ主角人格与生俱来的底气，我从不会被外界的闲言碎语所裹挟。打工人的艰辛我尽数体会：做过服务员，曾被苛责训斥，却从不会被击垮；进过电子厂，在流水线的枯燥中沉淀心性，从未轻言放弃；担任收银理货员时，一个人承担起比教室还大的店铺所有事务，收银、理货、对账全程独当一面，遇事沉稳不慌；更曾当过保安，接受过退伍军人的严格训练，站姿挺拔、纪律性极强，气场自带威慑力。在此明确表态，任何人的指责、非议、轻视，我都不屑一顾，借用马斯克的态度回应：I don't care。我与生俱来的自信，从不需要任何人来认可，你若说我不行，那只能是你眼光短浅，看不到我的价值。我向来不好惹，也从不会迁就任何人的否定，我的底气与能力，自己说了算——不过也有例外，你要是嗓门够大，能赶上我高中班主任那种程度，大晚上一嗓子，能把教学楼1楼到4楼的灯全震亮（班主任身居4楼，那气场，至今想来都忍不住怂一下，也就他能让我收起锋芒）。</p>
+          <p>除此之外，还去过国家电网打酱油，要是你在荆门，说不定你家的用电档案，我还偷偷看过一眼哦～ 总的来说，我就是一个热爱生活、社交力拉满、抗压能力极强，偶尔有点小迷糊，却始终积极向上的02年大男孩，未来继续随心而行，快乐翻倍！</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>

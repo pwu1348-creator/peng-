@@ -1,13 +1,13 @@
-// script.js — Mr. Peng 个人主页交互逻辑
+// script.js — ShiPeng 个人主页交互逻辑
 
 // ========== 元素引用 ==========
 const videoIntro = document.getElementById('video-intro');
 const introVideo = document.getElementById('introVideo');
-const heroVideo = document.querySelector('.hero-video');
+
 const skipVideoBtn = document.getElementById('skipVideo');
 const questionsContainer = document.getElementById('questions-container');
 const mainContent = document.getElementById('main-content');
-const heroVisitor = document.getElementById('heroVisitor');
+
 const captions = document.querySelectorAll('.caption');
 
 // 问题页相关
@@ -27,34 +27,6 @@ const qmotto = document.getElementById('qmotto');
 let currentQIndex = 0;
 const totalQuestions = questionPages.length;
 
-// ========== 首页背景视频处理 ==========
-if (heroVideo) {
-  // 强制尝试播放背景视频
-  const playVideo = () => {
-    if (heroVideo.paused) {
-      const playPromise = heroVideo.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(err => console.log('Hero video autoplay blocked:', err));
-      }
-    }
-  };
-
-  // 监听视频可以播放时立即播放
-  heroVideo.addEventListener('canplay', playVideo);
-  
-  // 如果已经加载完毕，直接播放
-  if (heroVideo.readyState >= 2) {
-    playVideo();
-  }
-
-  // 监听视频加载错误
-  heroVideo.addEventListener('error', (e) => {
-    console.error('Hero video failed to load:', e);
-  });
-
-  // 重新加载视频
-  heroVideo.load();
-}
 
 // ========== 视频入场 ==========
 
@@ -302,19 +274,6 @@ qDots.forEach(dot => {
 
 // ========== 进入主页面 ==========
 function enterMainPage() {
-  // 收集用户数据
-  const visitorData = {
-    name: qname.value.trim() || '神秘人',
-    age: qage.value.trim() || '未知',
-    hobby: qhobby.value.trim() || '保密',
-    motto: qmotto.value.trim() || '沉默是金'
-  };
-
-  // 在 Hero 区域显示访客信息
-  heroVisitor.innerHTML = `
-    ${visitorData.name} · ${visitorData.age}岁 · 爱好${visitorData.hobby} · 「${visitorData.motto}」
-  `;
-
   // 问题页淡出
   const activeQ = questionPages[currentQIndex];
   activeQ.classList.add('fade-out');
@@ -396,3 +355,47 @@ panels.forEach(panel => {
     panelObserver.observe(panel);
   }
 });
+
+// ========== 弹窗控制 ==========
+(function() {
+  var btnProjects = document.getElementById('btnProjects');
+  var btnExperience = document.getElementById('btnExperience');
+  var modalProjects = document.getElementById('modalProjects');
+  var modalExperience = document.getElementById('modalExperience');
+
+  function openModal(modal) {
+    if (!modal) return;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (btnProjects) btnProjects.addEventListener('click', function() { openModal(modalProjects); });
+  if (btnExperience) btnExperience.addEventListener('click', function() { openModal(modalExperience); });
+
+  document.querySelectorAll('.modal-close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var targetId = btn.dataset.close;
+      closeModal(document.getElementById(targetId));
+    });
+  });
+
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeModal(overlay);
+    });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(function(overlay) {
+        closeModal(overlay);
+      });
+    }
+  });
+})();

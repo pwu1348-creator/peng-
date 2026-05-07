@@ -553,6 +553,23 @@ body {
   50% { transform: translateX(-50%) translateY(8px); }
 }
 
+/* ========== Welcome Banner ========== */
+.welcome-banner {
+  text-align: center;
+  padding: 3rem 1.5rem 1.5rem;
+  background: #faf8f5;
+}
+
+.welcome-banner p {
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: #3a3a3a;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* ========== Section Panels ========== */
 .panel {
   padding: 5rem 1.5rem;
@@ -755,6 +772,51 @@ body {
 }
 
 /* ========== Projects & Experience ========== */
+.proj-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.proj-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 3rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  font-family: inherit;
+  letter-spacing: 0.06em;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.proj-btn-left {
+  background: linear-gradient(135deg, #3b5998, #4a6fa5);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(59,89,152,0.25);
+}
+
+.proj-btn-left:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(59,89,152,0.4);
+}
+
+.proj-btn-right {
+  background: linear-gradient(135deg, #5b8c5a, #6da67d);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(91,140,90,0.25);
+}
+
+.proj-btn-right:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(91,140,90,0.4);
+}
+
 .proj-category {
   margin-bottom: 2.5rem;
 }
@@ -928,6 +990,177 @@ body {
   font-size: 0.82rem;
   color: #666;
   letter-spacing: 0.04em;
+}
+
+/* ========== Modal ========== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  position: relative;
+  width: 90%;
+  max-width: 720px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 6px;
+  padding: 2.5rem 2rem 2rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 0 80px rgba(139,119,80,0.08);
+  animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-letter {
+  background: #fdf8ed;
+  background-image:
+    linear-gradient(rgba(180,160,120,0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,160,120,0.12) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 30%, rgba(210,185,140,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 80%, rgba(190,160,120,0.15) 0%, transparent 60%);
+  background-size: 100% 2.2rem, 2.2rem 100%, 100% 100%, 100% 100%;
+  border: 2px solid #d4c5a0;
+  box-shadow:
+    0 4px 24px rgba(120,90,50,0.25),
+    inset 0 0 60px rgba(200,175,130,0.1),
+    0 0 0 8px #f5eedb,
+    0 0 0 10px #c8b88a;
+}
+
+.modal-letter::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(200,170,110,0.18) 0%, transparent 35%),
+    radial-gradient(circle at 85% 75%, rgba(190,155,100,0.13) 0%, transparent 35%);
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.8rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: #b8a070;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 2;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #7a5e3e;
+}
+
+.modal-title {
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #5a3e2b;
+  text-align: center;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.modal-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #c8a86a, #d4bc8a, #c8a86a);
+  border-radius: 2px;
+  margin: 0.6rem auto 0;
+}
+
+.modal-body {
+  position: relative;
+  z-index: 1;
+}
+
+.modal-project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-project-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(255,255,255,0.5);
+  border: 1px dashed #d4c5a0;
+  border-radius: 6px;
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
+  font-size: 1.15rem;
+}
+
+.modal-project-label {
+  font-weight: 700;
+  color: #5a3e2b;
+  min-width: 80px;
+}
+
+.modal-project-url {
+  color: #b8a070;
+  font-style: italic;
+}
+
+.modal-essay {
+  font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
+  font-size: 1.1rem;
+  line-height: 2.2rem;
+  color: #4a3520;
+  letter-spacing: 0.03em;
+}
+
+.modal-essay p {
+  text-indent: 2em;
+  margin-bottom: 0.6rem;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .modal-box {
+    padding: 1.8rem 1.2rem 1.5rem;
+    max-width: 95%;
+  }
+
+  .modal-letter {
+    box-shadow:
+      0 4px 20px rgba(120,90,50,0.25),
+      inset 0 0 40px rgba(200,175,130,0.1),
+      0 0 0 4px #f5eedb,
+      0 0 0 6px #c8b88a;
+  }
+
+  .modal-essay {
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
 }
 
 /* ========== Responsive ========== */
