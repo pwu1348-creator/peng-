@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr. Peng | 个人主页</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==================== 视频入场页 ==================== -->
+  <div id="video-intro" class="fullscreen-page video-intro">
+    <!-- 全屏视频 -->
+    <video id="introVideo" class="intro-video" autoplay muted playsinline preload="auto">
+      <source src="video/intro.mp4" type="video/mp4">
+    </video>
+    <!-- 暗色遮罩 -->
+    <div class="video-mask"></div>
+
+    <!-- 幽默字幕 -->
+    <div class="video-captions">
+      <p class="caption" data-time="0.5,2.8">
+        别紧张，这不是电影开场<br>只是一个程序员的个人网站 🤫
+      </p>
+      <p class="caption" data-time="2.8,5.5">
+        西门飞雪 vs 服部半藏<br>没错，我超爱仙侠武侠类的动漫 ⚔️
+      </p>
+      <p class="caption" data-time="5.5,8.2">
+        写代码之外也追追综艺<br>码农的世界不只有 0 和 1 📺
+      </p>
+      <p class="caption" data-time="8.2,99">
+        朋友嘛，就得互相了解<br>所以……先让我认识认识你？👇
+      </p>
+    </div>
+
+    <!-- 底部提示 -->
+    <div class="video-bottom-hint">
+      <span>视频只有 10 秒，忍忍就过去了 😄</span>
+      <button id="skipVideo" class="skip-video-btn">跳过视频 ›</button>
+    </div>
+  </div>
+
+  <!-- ==================== 问题页容器 ==================== -->
+  <div id="questions-container" style="display:none;">
+
+    <!-- Q1: 名字 — 背景：洱海，问题放在大石头上（左下区域） -->
+    <div id="q1" class="fullscreen-page question-page" data-bg="洱海">
+      <div class="question-bg" style="background-image: url('img/bg-q1.jpg');"></div>
+      <div class="question-card q-pos-1">
+        <span class="q-number">01 / 04</span>
+        <label for="qname">你的名字</label>
+        <input type="text" id="qname" maxlength="10" placeholder="西门飞雪？小猪佩奇？" autocomplete="off">
+        <span class="q-tip">随便填，开心就好。</span>
+        <button class="q-next-btn" data-next="q2">下一题 ›</button>
+      </div>
+    </div>
+
+    <!-- Q2: 年龄 — 背景：萨摩耶，问题放在大爪子上（右下区域） -->
+    <div id="q2" class="fullscreen-page question-page" data-bg="萨摩耶">
+      <div class="question-bg" style="background-image: url('img/bg-q2.jpg');"></div>
+      <div class="question-card q-pos-2">
+        <span class="q-number">02 / 04</span>
+        <label for="qage">你的年龄</label>
+        <input type="number" id="qage" min="1" max="120" placeholder="永远十八岁？" autocomplete="off">
+        <span class="q-tip">反正我年年十八，你敢不敢也填它。</span>
+        <button class="q-next-btn" data-next="q3">下一题 ›</button>
+      </div>
+    </div>
+
+    <!-- Q3: 爱好 — 背景：雪山，问题放在山腰位置（上方居中） -->
+    <div id="q3" class="fullscreen-page question-page" data-bg="雪山">
+      <div class="question-bg" style="background-image: url('img/bg-q3.jpg');"></div>
+      <div class="question-card q-pos-3">
+        <span class="q-number">03 / 04</span>
+        <label for="qhobby">你的爱好</label>
+        <input type="text" id="qhobby" maxlength="20" placeholder="别写吃饭睡觉..." autocomplete="off">
+        <span class="q-tip">整点高级又离谱的，比如「在喜马拉雅山顶吹口琴」。</span>
+        <button class="q-next-btn" data-next="q4">下一题 ›</button>
+      </div>
+    </div>
+
+    <!-- Q4: 口头禅 — 背景：沙漠，问题放在沙丘上（右下区域） -->
+    <div id="q4" class="fullscreen-page question-page" data-bg="沙漠">
+      <div class="question-bg" style="background-image: url('img/bg-q4.jpg');"></div>
+      <div class="question-card q-pos-4">
+        <span class="q-number">04 / 04</span>
+        <label for="qmotto">你的口头禅</label>
+        <input type="text" id="qmotto" maxlength="20" placeholder="一句装逼语录..." autocomplete="off">
+        <span class="q-tip">来一句你天天挂嘴边的人生金句。</span>
+        <button id="goMainBtn" class="q-next-btn q-enter-btn">进入 Mr.Peng 的世界 ›</button>
+      </div>
+    </div>
+
+    <!-- 进度指示器 -->
+    <div class="q-progress">
+      <span class="q-dot active" data-target="q1"></span>
+      <span class="q-dot" data-target="q2"></span>
+      <span class="q-dot" data-target="q3"></span>
+      <span class="q-dot" data-target="q4"></span>
+    </div>
+  </div>
+
+  <!-- ==================== 主页面 ==================== -->
+  <div id="main-content" class="main-content" style="display:none;">
+
+    <!-- 顶部导航 -->
+    <nav class="main-nav" id="mainNav">
+      <span class="nav-brand">Mr. Peng</span>
+      <ul class="nav-links">
+        <li><a href="#about">关于我</a></li>
+        <li><a href="#hobbies">爱好性格</a></li>
+        <li><a href="#dreams">梦想旅游</a></li>
+        <li><a href="#projects">项目经历</a></li>
+      </ul>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">一身清风两袖墨<br>半壶浊酒笑人生</h1>
+        <p class="hero-sub">欢迎来到 Mr. Peng 的个人世界</p>
+        <div class="hero-visitor" id="heroVisitor"></div>
+      </div>
+      <div class="hero-scroll-hint">↓ 向下探索 ↓</div>
+    </section>
+
+    <!-- 板块一：关于 Mr. Peng -->
+    <section class="panel" id="about">
+      <div class="panel-inner">
+        <h2 class="panel-title">关于 Mr. Peng</h2>
+        <div class="panel-body about-body">
+          <div class="about-avatar">👤</div>
+          <div class="about-text">
+            <p class="about-lead">你好，我是 Mr. Peng。</p>
+            <p>这里写你的个人介绍 —— 你是谁、来自哪里、现在在做什么。保持真诚，让朋友觉得亲切，让HR觉得专业。</p>
+            <p>可以聊聊你的职业方向、技术栈、或者你正在探索的领域。像跟朋友喝咖啡一样自然。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 板块二：爱好与性格 -->
+    <section class="panel panel-alt" id="hobbies">
+      <div class="panel-inner">
+        <h2 class="panel-title">爱好与性格</h2>
+        <div class="panel-body hobbies-body">
+          <div class="trait-card">
+            <span class="trait-icon">🎯</span>
+            <h3>性格标签</h3>
+            <p>这里描述你的性格 —— 乐观？沉稳？幽默？搞怪？用几个关键词概括自己。</p>
+          </div>
+          <div class="trait-card">
+            <span class="trait-icon">🔥</span>
+            <h3>日常爱好</h3>
+            <p>除了写代码还喜欢干什么？徒步？摄影？烹饪？养狗？写出来让读者看到立体的你。</p>
+          </div>
+          <div class="trait-card">
+            <span class="trait-icon">💬</span>
+            <h3>社交风格</h3>
+            <p>朋友眼中的你是什么样？聚会的话题制造者？还是安静倾听的那个人？</p>
+          </div>
+          <div class="trait-card">
+            <span class="trait-icon">🧠</span>
+            <h3>思维模式</h3>
+            <p>遇到问题怎么思考？理性分析派？直觉行动派？还是天马行空创意派？</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 板块三：梦想与旅游作品集 -->
+    <section class="panel" id="dreams">
+      <div class="panel-inner">
+        <h2 class="panel-title">梦想与旅游作品集</h2>
+        <div class="panel-body dreams-body">
+          <div class="dream-quote">
+            <p>"这里写一句你关于旅行或梦想的名言 —— 比如'世界那么大，代码和相机都要带上'。"</p>
+          </div>
+          <div class="gallery-grid">
+            <div class="gallery-card">
+              <div class="gallery-img" style="background-image: url('img/travel1.jpg');"></div>
+              <span>// 大理·洱海</span>
+            </div>
+            <div class="gallery-card">
+              <div class="gallery-img" style="background-image: url('img/travel2.jpg');"></div>
+              <span>// 西藏·纳木错</span>
+            </div>
+            <div class="gallery-card">
+              <div class="gallery-img" style="background-image: url('img/travel3.jpg');"></div>
+              <span>// 新疆·喀纳斯</span>
+            </div>
+            <div class="gallery-card">
+              <div class="gallery-img" style="background-image: url('img/travel4.jpg');"></div>
+              <span>// 稻城·亚丁</span>
+            </div>
+            <div class="gallery-card">
+              <div class="gallery-img" style="background-image: url('img/travel5.jpg');"></div>
+              <span>// 日本·京都</span>
+            </div>
+            <div class="gallery-card">
+              <div class="gallery-img" style="background-image: url('img/travel6.jpg');"></div>
+              <span>// 冰岛·极光</span>
+            </div>
+          </div>
+          <div class="dream-list">
+            <h3>我的旅行梦想清单</h3>
+            <ul>
+              <li>✅ 已完成：// 写你去过的地方</li>
+              <li>🎯 下一站：// 写你下一个目的地</li>
+              <li>🌟 终极梦想：// 写你最想去的地方</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 板块四：个人成果与项目经历 -->
+    <section class="panel panel-alt" id="projects">
+      <div class="panel-inner">
+        <h2 class="panel-title">项目成果与经历</h2>
+        <div class="panel-body projects-body">
+
+          <!-- 项目卡片 -->
+          <div class="proj-category">
+            <h3>🚀 技术项目</h3>
+            <div class="proj-cards">
+              <div class="proj-card">
+                <h4>RAG 智能问答系统</h4>
+                <div class="proj-video-placeholder">
+                  <!-- 后期替换为B站嵌入代码 -->
+                  <span>B站视频嵌入区域</span>
+                </div>
+                <p>项目简介：基于大语言模型的检索增强生成系统，实现智能文档问答。</p>
+                <div class="proj-tags">
+                  <span>Python</span><span>LangChain</span><span>向量数据库</span>
+                </div>
+              </div>
+              <div class="proj-card">
+                <h4>项目名称二</h4>
+                <div class="proj-video-placeholder">
+                  <span>项目截图或视频区域</span>
+                </div>
+                <p>项目简介：这里描述你的第二个项目。</p>
+                <div class="proj-tags">
+                  <span>技术标签</span><span>技术标签</span>
+                </div>
+              </div>
+              <div class="proj-card">
+                <h4>项目名称三</h4>
+                <div class="proj-video-placeholder">
+                  <span>项目截图或视频区域</span>
+                </div>
+                <p>项目简介：这里描述你的第三个项目。</p>
+                <div class="proj-tags">
+                  <span>技术标签</span><span>技术标签</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 个人经历时间线 -->
+          <div class="proj-category">
+            <h3>📅 个人经历</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <span class="timeline-date">2024 - 至今</span>
+                  <h4>// 公司/学校名称</h4>
+                  <p>// 职位或专业，简要描述你在这里做的事情和收获。</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <span class="timeline-date">2022 - 2024</span>
+                  <h4>// 公司/学校名称</h4>
+                  <p>// 职位或专业，简要描述你在这里做的事情和收获。</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <span class="timeline-date">2020 - 2022</span>
+                  <h4>// 公司/学校名称</h4>
+                  <p>// 职位或专业，简要描述你在这里做的事情和收获。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系页脚 -->
+    <footer class="main-footer" id="contact">
+      <h2>联系我</h2>
+      <div class="footer-links">
+        <div class="footer-item">
+          <span class="footer-icon">📧</span>
+          <span>邮箱：// your@email.com</span>
+        </div>
+        <div class="footer-item">
+          <span class="footer-icon">💬</span>
+          <span>微信：// your_wechat</span>
+        </div>
+        <div class="footer-item">
+          <span class="footer-icon">🐙</span>
+          <a href="#" target="_blank">GitHub：// your_github</a>
+        </div>
+        <div class="footer-item">
+          <span class="footer-icon">🔗</span>
+          <span>其它：// 小红书 / 知乎 / B站 等</span>
+        </div>
+      </div>
+      <p class="footer-copy">© 2026 Mr. Peng — 用代码和脚步丈量世界</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
