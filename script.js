@@ -3,6 +3,7 @@
 // ========== 元素引用 ==========
 const videoIntro = document.getElementById('video-intro');
 const introVideo = document.getElementById('introVideo');
+const heroVideo = document.querySelector('.hero-video');
 const skipVideoBtn = document.getElementById('skipVideo');
 const questionsContainer = document.getElementById('questions-container');
 const mainContent = document.getElementById('main-content');
@@ -26,13 +27,65 @@ const qmotto = document.getElementById('qmotto');
 let currentQIndex = 0;
 const totalQuestions = questionPages.length;
 
+// ========== 首页背景视频处理 ==========
+if (heroVideo) {
+  // 强制尝试播放背景视频
+  const playVideo = () => {
+    if (heroVideo.paused) {
+      const playPromise = heroVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => console.log('Hero video autoplay blocked:', err));
+      }
+    }
+  };
+
+  // 监听视频可以播放时立即播放
+  heroVideo.addEventListener('canplay', playVideo);
+  
+  // 如果已经加载完毕，直接播放
+  if (heroVideo.readyState >= 2) {
+    playVideo();
+  }
+
+  // 监听视频加载错误
+  heroVideo.addEventListener('error', (e) => {
+    console.error('Hero video failed to load:', e);
+  });
+
+  // 重新加载视频
+  heroVideo.load();
+}
+
 // ========== 视频入场 ==========
 
-// 强制播放（部分浏览器拦截 autoplay）
+const videoLoading = document.getElementById('videoLoading');
+
+// 视频加载好后再播放
 if (introVideo) {
-  introVideo.play().catch(() => {
-    // 被拦截则静默，用户可点跳过按钮
+  // 监听视频数据加载完成
+  introVideo.addEventListener('loadeddata', () => {
+    if (videoLoading) videoLoading.style.display = 'none';
+    introVideo.play().catch(() => {});
   });
+
+  // 有些浏览器需要 canplay 事件
+  introVideo.addEventListener('canplay', () => {
+    if (videoLoading) videoLoading.style.display = 'none';
+    introVideo.play().catch(() => {});
+  });
+
+  // 视频加载失败
+  introVideo.addEventListener('error', () => {
+    if (videoLoading) {
+      videoLoading.innerHTML = '⚠️ 视频加载失败，请点击跳过';
+      videoLoading.style.color = '#e88';
+    }
+  });
+
+  // 兜底：直接尝试播放（可能已经可以播放了）
+  if (introVideo.readyState >= 2) {
+    introVideo.play().catch(() => {});
+  }
 }
 
 // 视频字幕同步
@@ -95,6 +148,7 @@ skipVideoBtn.addEventListener('click', () => {
 
 function fadeOutVideo() {
   cleanupCaptionTiming();
+  if (videoLoading) videoLoading.style.display = 'none';
   videoIntro.style.opacity = '0';
   videoIntro.style.transition = 'opacity 0.6s ease';
   setTimeout(() => {

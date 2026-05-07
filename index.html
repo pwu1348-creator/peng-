@@ -11,9 +11,9 @@
   <!-- ==================== 视频入场页 ==================== -->
   <div id="video-intro" class="fullscreen-page video-intro">
     <!-- 全屏视频 -->
-    <video id="introVideo" class="intro-video" autoplay muted playsinline preload="auto">
-      <source src="video/intro2.mp4" type="video/mp4">
-    </video>
+    <video id="introVideo" class="intro-video" src="video/intro.mp4" autoplay muted playsinline preload="auto"></video>
+    <!-- 视频加载中的占位提示 -->
+    <div class="video-loading" id="videoLoading">🎬 视频加载中...</div>
     <!-- 暗色遮罩 -->
     <div class="video-mask"></div>
 
@@ -23,7 +23,7 @@
         别紧张，这不是电影开场<br>只是一个程序员的个人网站 🤫
       </p>
       <p class="caption" data-time="4.5,8.5">
-        西门飞雪 vs 服部半藏<br>没错，我超爱仙侠武侠类的动漫 ⚔️
+        这打斗场面帅不帅？<br>没错，我超爱仙侠武侠类的动漫 ⚔️
       </p>
       <p class="caption" data-time="8.5,12.5">
         写代码之外也追追综艺<br>码农的世界不只有 0 和 1 📺
@@ -116,9 +116,7 @@
 
     <!-- 英雄区域 -->
     <section class="hero" id="hero">
-      <video class="hero-video" autoplay muted loop playsinline>
-        <source src="video/intro2.mp4" type="video/mp4">
-      </video>
+      <video class="hero-video" src="video/intro2.mp4" autoplay muted loop playsinline preload="auto"></video>
       <div class="hero-bg"></div>
       <div class="hero-content">
         <h1 class="hero-title">一身清风两袖墨<br>半壶浊酒笑人生</h1>
