@@ -28,6 +28,13 @@ const totalQuestions = questionPages.length;
 
 // ========== 视频入场 ==========
 
+// 强制播放（部分浏览器拦截 autoplay）
+if (introVideo) {
+  introVideo.play().catch(() => {
+    // 被拦截则静默，用户可点跳过按钮
+  });
+}
+
 // 视频字幕同步
 let captionTimers = [];
 

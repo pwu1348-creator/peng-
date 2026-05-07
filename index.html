@@ -12,30 +12,30 @@
   <div id="video-intro" class="fullscreen-page video-intro">
     <!-- 全屏视频 -->
     <video id="introVideo" class="intro-video" autoplay muted playsinline preload="auto">
-      <source src="video/intro.mp4" type="video/mp4">
+      <source src="video/intro2.mp4" type="video/mp4">
     </video>
     <!-- 暗色遮罩 -->
     <div class="video-mask"></div>
 
     <!-- 幽默字幕 -->
     <div class="video-captions">
-      <p class="caption" data-time="0.5,2.8">
+      <p class="caption" data-time="0.8,4.5">
         别紧张，这不是电影开场<br>只是一个程序员的个人网站 🤫
       </p>
-      <p class="caption" data-time="2.8,5.5">
+      <p class="caption" data-time="4.5,8.5">
         西门飞雪 vs 服部半藏<br>没错，我超爱仙侠武侠类的动漫 ⚔️
       </p>
-      <p class="caption" data-time="5.5,8.2">
+      <p class="caption" data-time="8.5,12.5">
         写代码之外也追追综艺<br>码农的世界不只有 0 和 1 📺
       </p>
-      <p class="caption" data-time="8.2,99">
+      <p class="caption" data-time="12.5,99">
         朋友嘛，就得互相了解<br>所以……先让我认识认识你？👇
       </p>
     </div>
 
     <!-- 底部提示 -->
     <div class="video-bottom-hint">
-      <span>视频只有 10 秒，忍忍就过去了 😄</span>
+      <span>视频只有 15 秒，忍忍就过去了 😄</span>
       <button id="skipVideo" class="skip-video-btn">跳过视频 ›</button>
     </div>
   </div>
@@ -116,6 +116,9 @@
 
     <!-- 英雄区域 -->
     <section class="hero" id="hero">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="video/intro2.mp4" type="video/mp4">
+      </video>
       <div class="hero-bg"></div>
       <div class="hero-content">
         <h1 class="hero-title">一身清风两袖墨<br>半壶浊酒笑人生</h1>
@@ -130,11 +133,12 @@
       <div class="panel-inner">
         <h2 class="panel-title">关于 Mr. Peng</h2>
         <div class="panel-body about-body">
-          <div class="about-avatar">👤</div>
+          <div class="about-avatar">🐧</div>
           <div class="about-text">
-            <p class="about-lead">你好，我是 Mr. Peng。</p>
-            <p>这里写你的个人介绍 —— 你是谁、来自哪里、现在在做什么。保持真诚，让朋友觉得亲切，让HR觉得专业。</p>
-            <p>可以聊聊你的职业方向、技术栈、或者你正在探索的领域。像跟朋友喝咖啡一样自然。</p>
+            <p class="about-lead">你好，我是 Mr. Peng —— 一只试图用代码驯服世界，却经常被 bug 反杀的理想主义程序猿。</p>
+            <p>毕业于「熬夜大学·计算机秃头专业」，主修和 AI 聊天、跟 GPU 讨价还价、以及如何在 StackOverflow 上优雅地复制粘贴。Currently，正在一家科技公司做 AI 相关的事情，日常就是调参、等训练、再调参、再等训练……循环往复，乐此不疲（大概吧）。</p>
+            <p>技术栈：Python 是母语，Java 是方言，C++ 是那种过年才见一次的远房亲戚。擅长把大模型装进小显存，也擅长在深夜对着报错日志发呆。坚信「只要能跑就别动它」和「代码和人，有一个能跑就行」这两条编程真理。</p>
+            <p>不写代码的时候，你大概率能在羽毛球场、某个旅游景点、或者游戏里找到我。人生信条：<em>Work hard, play harder, and let the GPU do the rest.</em></p>
           </div>
         </div>
       </div>
@@ -146,24 +150,24 @@
         <h2 class="panel-title">爱好与性格</h2>
         <div class="panel-body hobbies-body">
           <div class="trait-card">
-            <span class="trait-icon">🎯</span>
+            <span class="trait-icon">🎭</span>
             <h3>性格标签</h3>
-            <p>这里描述你的性格 —— 乐观？沉稳？幽默？搞怪？用几个关键词概括自己。</p>
+            <p>ENFJ · 社交变色龙<br>时而社牛到让全场人以为我是主办方，时而社恐到想躲进机箱里。朋友圈里的「气氛组组长」，但也需要定期闭关回血。总的来说——<em>外向的内向人，或者内向的外向人，看天气。</em></p>
           </div>
           <div class="trait-card">
-            <span class="trait-icon">🔥</span>
+            <span class="trait-icon">🎮</span>
             <h3>日常爱好</h3>
-            <p>除了写代码还喜欢干什么？徒步？摄影？烹饪？养狗？写出来让读者看到立体的你。</p>
+            <p>🎮 打游戏 —— 又菜又爱玩，输了怪网速<br>🏸 羽毛球 —— 球场上的「差点意思」选手<br>✈️ 旅游 —— 去哪儿不重要，拍照发圈才重要<br>🎵 音乐与艺术 —— 耳机是本体，美术馆是快乐老家<br>🤖 AI —— 工作和爱好完美重叠的幸运儿</p>
           </div>
           <div class="trait-card">
             <span class="trait-icon">💬</span>
             <h3>社交风格</h3>
-            <p>朋友眼中的你是什么样？聚会的话题制造者？还是安静倾听的那个人？</p>
+            <p>在朋友眼里是「那个总能攒局的家伙」—— 擅长把一群人聚起来，然后自己躲在角落观察大家开心。<br>群聊活跃度 TOP 3，线下聚会到场率 BOTTOM 3。<br>口头禅：「下次一定来！」然后下次继续放鸽子 🕊️<br>但真有朋友需要帮忙时，二话不说直接到场。</p>
           </div>
           <div class="trait-card">
             <span class="trait-icon">🧠</span>
             <h3>思维模式</h3>
-            <p>遇到问题怎么思考？理性分析派？直觉行动派？还是天马行空创意派？</p>
+            <p>大脑操作系统：<em>逻辑理性 + 创意混沌 双核驱动</em><br>遇到 bug → 先用直觉猜，猜不中再 debug<br>做决策 → 列个 Excel 分析半天，最后靠感觉选<br>学新东西 → 先一头扎进去，淹个半死再慢慢学会游泳<br>灵感来源：洗澡时、半夜三点、以及 deadline 前 5 分钟。</p>
           </div>
         </div>
       </div>
@@ -175,8 +179,10 @@
         <h2 class="panel-title">梦想与旅游作品集</h2>
         <div class="panel-body dreams-body">
           <div class="dream-quote">
-            <p>"这里写一句你关于旅行或梦想的名言 —— 比如'世界那么大，代码和相机都要带上'。"</p>
+            <p>"世界那么大，代码和相机都要带上。Bug 修不完，但风景不等人。"</p>
           </div>
+
+          <!-- 旅游照片（图片自己找） -->
           <div class="gallery-grid">
             <div class="gallery-card">
               <div class="gallery-img" style="background-image: url('img/travel1.jpg');"></div>
@@ -203,12 +209,17 @@
               <span>// 冰岛·极光</span>
             </div>
           </div>
+
+          <!-- 人生梦想清单 -->
           <div class="dream-list">
-            <h3>我的旅行梦想清单</h3>
+            <h3>🌟 人生梦想清单</h3>
             <ul>
-              <li>✅ 已完成：// 写你去过的地方</li>
-              <li>🎯 下一站：// 写你下一个目的地</li>
-              <li>🌟 终极梦想：// 写你最想去的地方</li>
+              <li>🌍 环游全世界所有想去的国家</li>
+              <li>🇨🇳 环游中国每一座城市</li>
+              <li>🏠 拥有一套完全自己设计装修的房子</li>
+              <li>💰 不用上班，躺着也有稳定收入</li>
+              <li>🕊️ 一辈子不被生活压力困住</li>
+              <li>🛒 实现财务自由，想买啥不用看价格</li>
             </ul>
           </div>
         </div>
@@ -259,35 +270,26 @@
             </div>
           </div>
 
-          <!-- 个人经历时间线 -->
+          <!-- 特别感谢 -->
           <div class="proj-category">
-            <h3>📅 个人经历</h3>
-            <div class="timeline">
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2024 - 至今</span>
-                  <h4>// 公司/学校名称</h4>
-                  <p>// 职位或专业，简要描述你在这里做的事情和收获。</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2022 - 2024</span>
-                  <h4>// 公司/学校名称</h4>
-                  <p>// 职位或专业，简要描述你在这里做的事情和收获。</p>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                  <span class="timeline-date">2020 - 2022</span>
-                  <h4>// 公司/学校名称</h4>
-                  <p>// 职位或专业，简要描述你在这里做的事情和收获。</p>
-                </div>
-              </div>
+            <h3>❤️ 特别感谢</h3>
+            <p class="thanks-intro">人物不分先后，从出生到现在，感谢每一个出现在我生命中的你们：</p>
+            <div class="thanks-list">
+              <span>父母</span><span>奶奶</span>
+              <span>沈衍文</span><span>王家卿</span>
+              <span>黄钧</span><span>罗小芳</span>
+              <span>熊浩清</span><span>曾祥水</span>
+              <span>邹丽华</span><span>杨思箴</span>
+              <span>赖婧薇</span><span>章亚</span><span>曾铨</span>
+              <span>张杰</span><span>马知予</span>
+              <span>安意</span><span>丁一鸣</span>
+              <span>刘小通</span><span>周宗文</span>
+              <span>高超</span><span>钱英杰</span><span>仲闯</span><span>王昊宇</span>
+              <span>刘琛琛</span><span>张建</span>
+              <span>许激扬</span><span>张子悦</span>
+              <span>潘晓剑</span><span>陈刚</span>
             </div>
+            <p class="thanks-ending">……以及所有对我很友好、帮助过我的人。你们让我的世界变得更好。</p>
           </div>
         </div>
       </div>
