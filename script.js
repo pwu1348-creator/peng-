@@ -396,6 +396,43 @@ panels.forEach(panel => {
       document.querySelectorAll('.modal-overlay.active').forEach(function(overlay) {
         closeModal(overlay);
       });
+      closeLightbox();
     }
   });
 })();
+
+// ========== Gallery Lightbox ==========
+var lightbox = document.getElementById('lightbox');
+var lightboxImg = document.getElementById('lightboxImg');
+var lightboxLabel = document.getElementById('lightboxLabel');
+
+function openLightbox(src, label) {
+  if (!lightbox || !lightboxImg) return;
+  lightboxImg.src = src;
+  if (lightboxLabel) lightboxLabel.textContent = label || '';
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  if (!lightbox) return;
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+  setTimeout(function() { lightboxImg.src = ''; }, 350);
+}
+
+document.querySelectorAll('.gallery-card').forEach(function(card) {
+  card.addEventListener('click', function() {
+    var src = card.dataset.src;
+    var label = card.querySelector('span').textContent;
+    if (src) openLightbox(src, label);
+  });
+});
+
+if (lightbox) {
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+      closeLightbox();
+    }
+  });
+}
