@@ -39,8 +39,6 @@ const mobilePlayBtn = document.getElementById('mobilePlayBtn');
 
 // 设备检测
 var isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Windows Phone/i.test(navigator.userAgent);
-var isWeixin = /MicroMessenger/i.test(navigator.userAgent);
-var isAndroid = /Android/i.test(navigator.userAgent);
 
 // 视频加载超时兜底：8 秒后若还没开始播就自动跳过
 const VIDEO_TIMEOUT = 8000;

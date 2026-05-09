@@ -38,37 +38,22 @@
       (function() {
         var video = document.getElementById('introVideo');
         var ua = navigator.userAgent || '';
-        // 是否微信内置浏览器（安卓用 X5 / iOS 用 WKWebView）
-        var isWeixin = /MicroMessenger/i.test(ua);
         // 是否移动端（含平板），只用于决定是否注入 X5 专属属性
         var isMobile = /Mobi|Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Windows Phone/i.test(ua);
         var isProd = window.location.hostname === 'zhou1028.cn';
 
-        // 仅移动端注入 X5 专属属性，桌面端完全不受影响
-        // x5-playsinline：安卓 X5 强制同层显示
-        // x5-video-player-type="h5"：启用 X5 的 H5 播放器
-        // x5-video-player-fullscreen="false"：不自动全屏，防止被劫持
+        // 仅移动端注入 X5 专属属性
         if (isMobile) {
           video.setAttribute('x5-playsinline', '');
           video.setAttribute('x5-video-player-type', 'h5');
           video.setAttribute('x5-video-player-fullscreen', 'false');
         }
 
-        // 视频源路由：
-        // - 本地开发：本地文件
-        // - 线上 + 微信（尤其安卓 X5）：走同源，绕开跨域 / 防盗链 / X5 对外链的限制
-        // - 线上其他（桌面端 + 移动端自带浏览器等）：走腾讯云 COS 走 CDN
-        var src;
-        if (!isProd) {
-          src = 'video/intro.mp4';
-        } else if (isWeixin) {
-          src = 'video/intro.mp4';
-        } else {
-          src = 'https://wushipeng-video-1391388484.cos.ap-nanjing.myqcloud.com/intro.mp4';
-        }
+        // 视频源：本地走文件夹，线上走腾讯云 COS CDN
+        video.src = isProd
+          ? 'https://wushipeng-video-1391388484.cos.ap-nanjing.myqcloud.com/intro.mp4'
+          : 'video/intro.mp4';
 
-        video.src = src;
-        // 安卓微信 X5：动态 src 要显式 load() 才会真正开始加载
         try { video.load(); } catch(e) {}
       })();
     </script>
