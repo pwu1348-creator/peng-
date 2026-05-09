@@ -33,14 +33,22 @@ const totalQuestions = questionPages.length;
 const videoLoading = document.getElementById('videoLoading');
 let videoSkipped = false;
 
-// 视频加载超时兜底：移动端浏览器经常拦截自动播放，8 秒后若还没开始播就自动跳过
+// 移动端播放引导覆盖层
+const mobilePlayOverlay = document.getElementById('mobilePlayOverlay');
+const mobilePlayBtn = document.getElementById('mobilePlayBtn');
+
+// 设备检测
+var isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Windows Phone/i.test(navigator.userAgent);
+var isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+var isAndroid = /Android/i.test(navigator.userAgent);
+
+// 视频加载超时兜底：8 秒后若还没开始播就自动跳过
 const VIDEO_TIMEOUT = 8000;
 let videoTimeoutId = null;
 
 function startVideoTimeout() {
   videoTimeoutId = setTimeout(() => {
     if (videoSkipped) return;
-    // 如果视频还没开始播放（currentTime 接近 0 且未结束）
     if (introVideo && introVideo.currentTime < 0.3 && !introVideo.ended) {
       if (videoLoading) {
         videoLoading.innerHTML = '📱 视频加载较慢，自动跳过中...';
@@ -58,73 +66,105 @@ function clearVideoTimeout() {
   }
 }
 
-// ========== 安卓微信 X5 播放兜底 ==========
-// iOS 微信用 WKWebView 可以自动播；安卓微信用 X5 内核，几乎一定拦截 autoplay，必须靠用户手势
-var isWeixin = /MicroMessenger/i.test(navigator.userAgent);
-var isAndroid = /Android/i.test(navigator.userAgent);
-
 function tryPlayVideo() {
   if (!introVideo || !introVideo.src || videoSkipped) return;
   var p = introVideo.play();
   if (p && typeof p.catch === 'function') p.catch(function(){});
 }
 
-// 微信 JSBridge 就绪后试一次
-document.addEventListener('WeixinJSBridgeReady', tryPlayVideo, false);
-if (typeof WeixinJSBridge !== 'undefined') tryPlayVideo();
+// ========== 移动端：显示播放引导覆盖层 ==========
+// 核心逻辑：移动端（尤其安卓微信 X5）必须有用户手势才能播放视频
+// 所以在移动端先展示一个播放按钮，用户点击后在同一个事件回调中调用 video.play()
+// 这样就满足了浏览器对"用户手势触发"的要求
 
-// 任意用户手势都触发播放（X5 必需）
-var userGestureEvents = ['touchstart', 'touchend', 'click', 'pointerdown'];
-function playOnGesture() {
-  tryPlayVideo();
-  userGestureEvents.forEach(function(ev) {
-    document.removeEventListener(ev, playOnGesture, true);
-  });
-}
-userGestureEvents.forEach(function(ev) {
-  document.addEventListener(ev, playOnGesture, { capture: true, passive: true });
-});
+if (isMobileDevice && mobilePlayOverlay) {
+  // 移动端：显示覆盖层，隐藏视频加载提示
+  mobilePlayOverlay.style.display = 'block';
+  if (videoLoading) videoLoading.style.display = 'none';
 
-// 安卓微信下：1.2 秒后若视频还没动，把加载提示换成"轻触屏幕播放视频"引导用户交互
-if (isWeixin && isAndroid) {
-  setTimeout(function() {
-    if (!introVideo || videoSkipped) return;
-    if (introVideo.paused || introVideo.readyState < 2) {
-      if (videoLoading) {
-        videoLoading.innerHTML = '👆 轻触屏幕播放视频';
-        videoLoading.style.color = '#fff';
-        videoLoading.style.fontSize = '1.2rem';
-        videoLoading.style.pointerEvents = 'auto';
-        videoLoading.style.cursor = 'pointer';
-        videoLoading.onclick = tryPlayVideo;
-      }
+  // 点击播放按钮（防止重复触发）
+  var mobilePlayTriggered = false;
+  function handleMobilePlay() {
+    if (mobilePlayTriggered) return;
+    mobilePlayTriggered = true;
+
+    // 隐藏覆盖层（带动画）
+    mobilePlayOverlay.style.transition = 'opacity 0.5s ease';
+    mobilePlayOverlay.style.opacity = '0';
+    setTimeout(function() {
+      mobilePlayOverlay.style.display = 'none';
+    }, 500);
+
+    // 在用户手势回调中直接播放视频 —— 这是解决 X5 限制的关键
+    if (introVideo) {
+      introVideo.play().then(function() {
+        // 播放成功
+        clearVideoTimeout();
+        if (videoLoading) videoLoading.style.display = 'none';
+      }).catch(function() {
+        // 播放仍然失败（极端情况），启动超时兜底
+        startVideoTimeout();
+      });
     }
-  }, 1200);
+  }
+
+  mobilePlayBtn.addEventListener('click', handleMobilePlay);
+  // 整个覆盖层也可以点击
+  mobilePlayOverlay.addEventListener('click', function(e) {
+    if (e.target === mobilePlayOverlay || e.target.classList.contains('mobile-play-bg')) {
+      handleMobilePlay();
+    }
+  });
+
+} else {
+  // ========== 桌面端：保持原有自动播放逻辑 ==========
+  if (mobilePlayOverlay) mobilePlayOverlay.style.display = 'none';
+
+  // 微信 JSBridge 就绪后试一次
+  document.addEventListener('WeixinJSBridgeReady', tryPlayVideo, false);
+  if (typeof WeixinJSBridge !== 'undefined') tryPlayVideo();
+
+  // 视频加载好后再播放
+  if (introVideo) {
+    startVideoTimeout();
+
+    introVideo.addEventListener('loadeddata', () => {
+      if (videoLoading) videoLoading.style.display = 'none';
+      introVideo.play().catch(() => {});
+    });
+
+    introVideo.addEventListener('canplay', () => {
+      if (videoLoading) videoLoading.style.display = 'none';
+      introVideo.play().catch(() => {});
+    });
+
+    introVideo.addEventListener('playing', () => {
+      clearVideoTimeout();
+      if (videoLoading) videoLoading.style.display = 'none';
+    });
+
+    introVideo.addEventListener('error', () => {
+      clearVideoTimeout();
+      if (videoLoading) {
+        videoLoading.innerHTML = '⚠️ 视频加载失败，自动跳过中...';
+        videoLoading.style.color = '#e88';
+      }
+      setTimeout(() => fadeOutVideo(), 1000);
+    });
+
+    if (introVideo.readyState >= 2) {
+      introVideo.play().catch(() => {});
+    }
+  }
 }
 
-// 视频加载好后再播放
-if (introVideo) {
-  startVideoTimeout();
-
-  // 监听视频数据加载完成
-  introVideo.addEventListener('loadeddata', () => {
-    if (videoLoading) videoLoading.style.display = 'none';
-    introVideo.play().catch(() => {});
-  });
-
-  // 有些浏览器需要 canplay 事件
-  introVideo.addEventListener('canplay', () => {
-    if (videoLoading) videoLoading.style.display = 'none';
-    introVideo.play().catch(() => {});
-  });
-
-  // 视频开始播放就清除超时
+// 移动端也需要监听视频事件（播放成功后隐藏 loading、播放结束后跳转等）
+if (isMobileDevice && introVideo) {
   introVideo.addEventListener('playing', () => {
     clearVideoTimeout();
     if (videoLoading) videoLoading.style.display = 'none';
   });
 
-  // 视频加载失败
   introVideo.addEventListener('error', () => {
     clearVideoTimeout();
     if (videoLoading) {
@@ -133,11 +173,6 @@ if (introVideo) {
     }
     setTimeout(() => fadeOutVideo(), 1000);
   });
-
-  // 兜底：直接尝试播放（可能已经可以播放了）
-  if (introVideo.readyState >= 2) {
-    introVideo.play().catch(() => {});
-  }
 }
 
 // 视频字幕同步
