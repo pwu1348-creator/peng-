@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ShiPeng | 个人主页</title>
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -12,13 +12,51 @@
   <!-- ==================== 视频入场页 ==================== -->
   <div id="video-intro" class="fullscreen-page video-intro">
     <!-- 全屏视频 -->
-    <video id="introVideo" class="intro-video" autoplay muted playsinline preload="auto"></video>
+    <video 
+      id="introVideo" 
+      class="intro-video" 
+      autoplay 
+      muted 
+      playsinline 
+      webkit-playsinline
+      preload="auto"
+    ></video>
     <script>
       (function() {
         var video = document.getElementById('introVideo');
-        video.src = window.location.hostname === 'zhou1028.cn'
-          ? 'https://wushipeng-video-1391388484.cos.ap-nanjing.myqcloud.com/intro.mp4'
-          : 'video/intro.mp4';
+        var ua = navigator.userAgent || '';
+        // 是否微信内置浏览器（安卓用 X5 / iOS 用 WKWebView）
+        var isWeixin = /MicroMessenger/i.test(ua);
+        // 是否移动端（含平板），只用于决定是否注入 X5 专属属性
+        var isMobile = /Mobi|Android|iPhone|iPad|iPod|IEMobile|Opera Mini|Windows Phone/i.test(ua);
+        var isProd = window.location.hostname === 'zhou1028.cn';
+
+        // 仅移动端注入 X5 专属属性，桌面端完全不受影响
+        // x5-playsinline：安卓 X5 强制同层显示
+        // x5-video-player-type="h5"：启用 X5 的 H5 播放器
+        // x5-video-player-fullscreen="false"：不自动全屏，防止被劫持
+        if (isMobile) {
+          video.setAttribute('x5-playsinline', '');
+          video.setAttribute('x5-video-player-type', 'h5');
+          video.setAttribute('x5-video-player-fullscreen', 'false');
+        }
+
+        // 视频源路由：
+        // - 本地开发：本地文件
+        // - 线上 + 微信（尤其安卓 X5）：走同源，绕开跨域 / 防盗链 / X5 对外链的限制
+        // - 线上其他（桌面端 + 移动端自带浏览器等）：走腾讯云 COS 走 CDN
+        var src;
+        if (!isProd) {
+          src = 'video/intro.mp4';
+        } else if (isWeixin) {
+          src = 'video/intro.mp4';
+        } else {
+          src = 'https://wushipeng-video-1391388484.cos.ap-nanjing.myqcloud.com/intro.mp4';
+        }
+
+        video.src = src;
+        // 安卓微信 X5：动态 src 要显式 load() 才会真正开始加载
+        try { video.load(); } catch(e) {}
       })();
     </script>
     <!-- 视频加载中的占位提示 -->
@@ -47,7 +85,6 @@
 
     <!-- 底部提示 -->
     <div class="video-bottom-hint">
-      <span>视频只有 15 秒，忍忍就过去了 😄</span>
       <button id="skipVideo" class="skip-video-btn">跳过视频 ›</button>
     </div>
   </div>
@@ -55,7 +92,7 @@
   <!-- ==================== 问题页容器 ==================== -->
   <div id="questions-container" style="display:none;">
 
-    <!-- Q1: 名字 — 背景：洱海，问题放在大石头上（左下区域） -->
+    <!-- Q1: 名字 -->
     <div id="q1" class="fullscreen-page question-page" data-bg="洱海">
       <div class="question-bg" style="background-image: url('img/bg-q1.jpg');"></div>
       <div class="question-card q-pos-1">
@@ -67,7 +104,7 @@
       </div>
     </div>
 
-    <!-- Q2: 年龄 — 背景：萨摩耶，问题放在大爪子上（右下区域） -->
+    <!-- Q2: 年龄 -->
     <div id="q2" class="fullscreen-page question-page" data-bg="萨摩耶">
       <div class="question-bg" style="background-image: url('img/bg-q2.jpg');"></div>
       <div class="question-card q-pos-2">
@@ -79,7 +116,7 @@
       </div>
     </div>
 
-    <!-- Q3: 爱好 — 背景：雪山，问题放在山腰位置（上方居中） -->
+    <!-- Q3: 爱好 -->
     <div id="q3" class="fullscreen-page question-page" data-bg="雪山">
       <div class="question-bg" style="background-image: url('img/bg-q3.jpg');"></div>
       <div class="question-card q-pos-3">
@@ -91,7 +128,7 @@
       </div>
     </div>
 
-    <!-- Q4: 口头禅 — 背景：沙漠，问题放在沙丘上（右下区域） -->
+    <!-- Q4: 口头禅 -->
     <div id="q4" class="fullscreen-page question-page" data-bg="沙漠">
       <div class="question-bg" style="background-image: url('img/bg-q4.jpg');"></div>
       <div class="question-card q-pos-4">
@@ -115,13 +152,12 @@
   <!-- ==================== 主页面 ==================== -->
   <div id="main-content" class="main-content" style="display:none;">
 
-	    <!-- 左侧纸张分隔区域（后续可添加卡通/真人形象） -->
-	    <div class="side-panel side-panel-left"></div>
+    <!-- 左侧纸张分隔区域 -->
+    <div class="side-panel side-panel-left"></div>
+    <!-- 右侧纸张分隔区域 -->
+    <div class="side-panel side-panel-right"></div>
 
-	    <!-- 右侧纸张分隔区域（后续可添加卡通/真人形象） -->
-	    <div class="side-panel side-panel-right"></div>
-
-	    <!-- 顶部导航 -->
+    <!-- 顶部导航 -->
     <nav class="main-nav" id="mainNav">
       <span class="nav-brand">ShiPeng</span>
       <ul class="nav-links">
@@ -200,159 +236,122 @@
             <p>"世界那么大，代码和相机都要带上。Bug 修不完，但风景不等人。"</p>
           </div>
 
-                    <!-- 旅游照片（点击放大） -->
-	          <div class="gallery-grid">
-	            <div class="gallery-card" data-src="img/travel1.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel1.jpg');"></div>
-	              <span>大理·洱海</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel2.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel2.jpg');"></div>
-	              <span>旅途风景</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel3.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel3.jpg');"></div>
-	              <span>旅途风景</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel4.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel4.jpg');"></div>
-	              <span>旅途风景</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel5.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel5.jpg');"></div>
-	              <span>旅行照片 5</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel6.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel6.jpg');"></div>
-	              <span>旅行照片 6</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel7.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel7.jpg');"></div>
-	              <span>旅行照片 7</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel8.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel8.jpg');"></div>
-	              <span>旅行照片 8</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel9.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel9.jpg');"></div>
-	              <span>旅行照片 9</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel10.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel10.jpg');"></div>
-	              <span>旅行照片 10</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel11.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel11.jpg');"></div>
-	              <span>旅行照片 11</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel12.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel12.jpg');"></div>
-	              <span>旅行照片 12</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel13.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel13.jpg');"></div>
-	              <span>旅行照片 13</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel14.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel14.jpg');"></div>
-	              <span>旅行照片 14</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel15.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel15.jpg');"></div>
-	              <span>旅行照片 15</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel16.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel16.jpg');"></div>
-	              <span>旅行照片 16</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel17.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel17.jpg');"></div>
-	              <span>旅行照片 17</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel18.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel18.jpg');"></div>
-	              <span>旅行照片 18</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel19.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel19.jpg');"></div>
-	              <span>旅行照片 19</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel20.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel20.jpg');"></div>
-	              <span>旅行照片 20</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel21.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel21.jpg');"></div>
-	              <span>旅行照片 21</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel22.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel22.jpg');"></div>
-	              <span>旅行照片 22</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel23.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel23.jpg');"></div>
-	              <span>旅行照片 23</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel24.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel24.jpg');"></div>
-	              <span>旅行照片 24</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel25.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel25.jpg');"></div>
-	              <span>旅行照片 25</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel26.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel26.jpg');"></div>
-	              <span>旅行照片 26</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel27.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel27.jpg');"></div>
-	              <span>旅行照片 27</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel28.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel28.jpg');"></div>
-	              <span>旅行照片 28</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel29.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel29.jpg');"></div>
-	              <span>旅行照片 29</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel30.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel30.jpg');"></div>
-	              <span>旅行照片 30</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel31.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel31.jpg');"></div>
-	              <span>旅行照片 31</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel32.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel32.jpg');"></div>
-	              <span>旅行照片 32</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel33.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel33.jpg');"></div>
-	              <span>旅行照片 33</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel34.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel34.jpg');"></div>
-	              <span>旅行照片 34</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel35.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel35.jpg');"></div>
-	              <span>旅行照片 35</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel36.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel36.jpg');"></div>
-	              <span>旅行照片 36</span>
-	            </div>
-	            <div class="gallery-card" data-src="img/travel37.jpg">
-	              <div class="gallery-img" style="background-image: url('img/travel37.jpg');"></div>
-	              <span>旅行照片 37</span>
-	            </div>
-	          </div>
+          <!-- 旅游照片（点击放大） -->
+          <div class="gallery-grid">
+            <div class="gallery-card" data-src="img/travel1.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel1.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel2.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel2.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel3.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel3.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel4.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel4.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel5.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel5.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel6.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel6.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel7.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel7.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel8.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel8.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel9.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel9.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel10.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel10.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel11.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel11.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel12.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel12.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel13.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel13.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel14.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel14.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel15.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel15.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel16.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel16.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel17.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel17.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel18.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel18.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel19.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel19.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel20.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel20.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel21.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel21.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel22.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel22.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel23.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel23.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel24.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel24.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel25.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel25.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel26.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel26.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel27.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel27.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel28.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel28.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel29.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel29.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel30.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel30.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel31.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel31.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel32.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel32.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel33.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel33.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel34.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel34.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel35.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel35.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel36.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel36.jpg');"></div>
+            </div>
+            <div class="gallery-card" data-src="img/travel37.jpg">
+              <div class="gallery-img" style="background-image: url('img/travel37.jpg');"></div>
+            </div>
+          </div>
 
-	          <!-- 人生梦想清单 -->
+          <!-- 人生梦想清单 -->
           <div class="dream-list">
             <h3>🌟 人生梦想清单</h3>
             <ul>

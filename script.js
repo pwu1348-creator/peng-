@@ -31,9 +31,81 @@ const totalQuestions = questionPages.length;
 // ========== 视频入场 ==========
 
 const videoLoading = document.getElementById('videoLoading');
+let videoSkipped = false;
+
+// 视频加载超时兜底：移动端浏览器经常拦截自动播放，8 秒后若还没开始播就自动跳过
+const VIDEO_TIMEOUT = 8000;
+let videoTimeoutId = null;
+
+function startVideoTimeout() {
+  videoTimeoutId = setTimeout(() => {
+    if (videoSkipped) return;
+    // 如果视频还没开始播放（currentTime 接近 0 且未结束）
+    if (introVideo && introVideo.currentTime < 0.3 && !introVideo.ended) {
+      if (videoLoading) {
+        videoLoading.innerHTML = '📱 视频加载较慢，自动跳过中...';
+        videoLoading.style.color = '#ffc';
+      }
+      setTimeout(() => fadeOutVideo(), 800);
+    }
+  }, VIDEO_TIMEOUT);
+}
+
+function clearVideoTimeout() {
+  if (videoTimeoutId) {
+    clearTimeout(videoTimeoutId);
+    videoTimeoutId = null;
+  }
+}
+
+// ========== 安卓微信 X5 播放兜底 ==========
+// iOS 微信用 WKWebView 可以自动播；安卓微信用 X5 内核，几乎一定拦截 autoplay，必须靠用户手势
+var isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+var isAndroid = /Android/i.test(navigator.userAgent);
+
+function tryPlayVideo() {
+  if (!introVideo || !introVideo.src || videoSkipped) return;
+  var p = introVideo.play();
+  if (p && typeof p.catch === 'function') p.catch(function(){});
+}
+
+// 微信 JSBridge 就绪后试一次
+document.addEventListener('WeixinJSBridgeReady', tryPlayVideo, false);
+if (typeof WeixinJSBridge !== 'undefined') tryPlayVideo();
+
+// 任意用户手势都触发播放（X5 必需）
+var userGestureEvents = ['touchstart', 'touchend', 'click', 'pointerdown'];
+function playOnGesture() {
+  tryPlayVideo();
+  userGestureEvents.forEach(function(ev) {
+    document.removeEventListener(ev, playOnGesture, true);
+  });
+}
+userGestureEvents.forEach(function(ev) {
+  document.addEventListener(ev, playOnGesture, { capture: true, passive: true });
+});
+
+// 安卓微信下：1.2 秒后若视频还没动，把加载提示换成"轻触屏幕播放视频"引导用户交互
+if (isWeixin && isAndroid) {
+  setTimeout(function() {
+    if (!introVideo || videoSkipped) return;
+    if (introVideo.paused || introVideo.readyState < 2) {
+      if (videoLoading) {
+        videoLoading.innerHTML = '👆 轻触屏幕播放视频';
+        videoLoading.style.color = '#fff';
+        videoLoading.style.fontSize = '1.2rem';
+        videoLoading.style.pointerEvents = 'auto';
+        videoLoading.style.cursor = 'pointer';
+        videoLoading.onclick = tryPlayVideo;
+      }
+    }
+  }, 1200);
+}
 
 // 视频加载好后再播放
 if (introVideo) {
+  startVideoTimeout();
+
   // 监听视频数据加载完成
   introVideo.addEventListener('loadeddata', () => {
     if (videoLoading) videoLoading.style.display = 'none';
@@ -46,12 +118,20 @@ if (introVideo) {
     introVideo.play().catch(() => {});
   });
 
+  // 视频开始播放就清除超时
+  introVideo.addEventListener('playing', () => {
+    clearVideoTimeout();
+    if (videoLoading) videoLoading.style.display = 'none';
+  });
+
   // 视频加载失败
   introVideo.addEventListener('error', () => {
+    clearVideoTimeout();
     if (videoLoading) {
-      videoLoading.innerHTML = '⚠️ 视频加载失败，请点击跳过';
+      videoLoading.innerHTML = '⚠️ 视频加载失败，自动跳过中...';
       videoLoading.style.color = '#e88';
     }
+    setTimeout(() => fadeOutVideo(), 1000);
   });
 
   // 兜底：直接尝试播放（可能已经可以播放了）
@@ -119,6 +199,8 @@ skipVideoBtn.addEventListener('click', () => {
 });
 
 function fadeOutVideo() {
+  videoSkipped = true;
+  clearVideoTimeout();
   cleanupCaptionTiming();
   if (videoLoading) videoLoading.style.display = 'none';
   videoIntro.style.opacity = '0';
