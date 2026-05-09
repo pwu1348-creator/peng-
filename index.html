@@ -13,6 +13,15 @@
   <div id="video-intro" class="fullscreen-page video-intro">
     <!-- 全屏视频 -->
     <video id="introVideo" class="intro-video" src="video/intro.mp4" autoplay muted playsinline preload="auto"></video>
+    <!-- 域名判断自动切换视频源 -->
+    <script>
+      (function() {
+        var video = document.getElementById('introVideo');
+        if (window.location.hostname === 'zhou1028.cn') {
+          video.src = 'https://wushipeng-video-1391388484.cos.ap-nanjing.myqcloud.com/intro.mp4';
+        }
+      })();
+    </script>
     <!-- 视频加载中的占位提示 -->
     <div class="video-loading" id="videoLoading">🎬 视频加载中...</div>
     <!-- 暗色遮罩 -->
