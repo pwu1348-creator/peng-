@@ -1458,6 +1458,23 @@ img, video {
   word-break: break-all;
 }
 
+.modal-project-detail {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(255,255,255,0.4);
+  border-radius: 4px;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  line-height: 1.8;
+  color: #5a3e2b;
+}
+
+.modal-project-detail a {
+  color: #7a5c3a;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
 .modal-essay {
   font-family: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
   font-size: clamp(0.95rem, 2.8vw, 1.1rem);
