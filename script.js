@@ -1,4 +1,4 @@
-// script.js — ShiPeng 个人主页交互逻辑
+// script.js — Peng 个人主页交互逻辑
 
 // ========== 元素引用 ==========
 const videoIntro = document.getElementById('video-intro');
