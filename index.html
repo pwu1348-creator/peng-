@@ -49,10 +49,8 @@
           video.setAttribute('x5-video-player-fullscreen', 'false');
         }
 
-        // 视频源：本地走文件夹，线上走腾讯云 COS CDN
-        video.src = isProd
-          ? 'https://wushipeng-video-1391388484.cos.ap-nanjing.myqcloud.com/intro.mp4'
-          : 'video/intro.mp4';
+        // 视频源：CDN 加速
+        video.src = 'https://cdn.zhou1028.cn/intro.mp4';
 
         try { video.load(); } catch(e) {}
       })();
@@ -92,7 +90,7 @@
 
     <!-- Q1: 名字 -->
     <div id="q1" class="fullscreen-page question-page" data-bg="洱海">
-      <div class="question-bg" style="background-image: url('img/bg-q1.jpg');"></div>
+      <div class="question-bg" style="background-image: url('https://cdn.zhou1028.cn/bg-q1.jpg');"></div>
       <div class="question-card q-pos-1">
         <span class="q-number">01 / 04</span>
         <label for="qname">你的名字</label>
@@ -104,7 +102,7 @@
 
     <!-- Q2: 年龄 -->
     <div id="q2" class="fullscreen-page question-page" data-bg="萨摩耶">
-      <div class="question-bg" style="background-image: url('img/bg-q2.jpg');"></div>
+      <div class="question-bg" style="background-image: url('https://cdn.zhou1028.cn/bg-q2.jpg');"></div>
       <div class="question-card q-pos-2">
         <span class="q-number">02 / 04</span>
         <label for="qage">你的年龄</label>
@@ -116,7 +114,7 @@
 
     <!-- Q3: 爱好 -->
     <div id="q3" class="fullscreen-page question-page" data-bg="雪山">
-      <div class="question-bg" style="background-image: url('img/bg-q3.jpg');"></div>
+      <div class="question-bg" style="background-image: url('https://cdn.zhou1028.cn/bg-q3.jpg');"></div>
       <div class="question-card q-pos-3">
         <span class="q-number">03 / 04</span>
         <label for="qhobby">你的爱好</label>
@@ -128,7 +126,7 @@
 
     <!-- Q4: 口头禅 -->
     <div id="q4" class="fullscreen-page question-page" data-bg="沙漠">
-      <div class="question-bg" style="background-image: url('img/bg-q4.jpg');"></div>
+      <div class="question-bg" style="background-image: url('https://cdn.zhou1028.cn/bg-q4.jpg');"></div>
       <div class="question-card q-pos-4">
         <span class="q-number">04 / 04</span>
         <label for="qmotto">你的口头禅</label>
@@ -168,7 +166,7 @@
 
     <!-- 英雄区域 -->
     <section class="hero" id="hero">
-      <div class="hero-video" style="background-image: url('img/bg-q5.jpg'); background-size: cover; background-position: center;"></div>
+      <div class="hero-video" style="background-image: url('https://cdn.zhou1028.cn/bg-q5.jpg'); background-size: cover; background-position: center;"></div>
       <div class="hero-bg"></div>
       <div class="hero-scroll-hint">↓ 向下探索 ↓</div>
     </section>
@@ -236,116 +234,116 @@
 
           <!-- 旅游照片（点击放大） -->
           <div class="gallery-grid">
-            <div class="gallery-card" data-src="img/travel1.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel1.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel1.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel1.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel2.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel2.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel2.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel2.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel3.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel3.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel3.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel3.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel4.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel4.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel4.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel4.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel5.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel5.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel5.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel5.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel6.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel6.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel6.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel6.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel7.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel7.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel7.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel7.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel8.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel8.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel8.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel8.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel9.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel9.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel9.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel9.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel10.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel10.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel10.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel10.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel11.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel11.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel11.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel11.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel12.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel12.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel12.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel12.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel13.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel13.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel13.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel13.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel14.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel14.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel14.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel14.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel15.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel15.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel15.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel15.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel16.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel16.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel16.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel16.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel17.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel17.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel17.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel17.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel18.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel18.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel18.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel18.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel19.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel19.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel19.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel19.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel20.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel20.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel20.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel20.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel21.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel21.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel21.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel21.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel22.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel22.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel22.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel22.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel23.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel23.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel23.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel23.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel24.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel24.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel24.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel24.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel25.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel25.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel25.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel25.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel26.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel26.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel26.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel26.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel27.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel27.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel27.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel27.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel28.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel28.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel28.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel28.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel29.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel29.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel29.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel29.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel30.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel30.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel30.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel30.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel31.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel31.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel31.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel31.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel32.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel32.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel32.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel32.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel33.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel33.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel33.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel33.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel34.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel34.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel34.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel34.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel35.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel35.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel35.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel35.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel36.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel36.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel36.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel36.jpg');"></div>
             </div>
-            <div class="gallery-card" data-src="img/travel37.jpg">
-              <div class="gallery-img" style="background-image: url('img/travel37.jpg');"></div>
+            <div class="gallery-card" data-src="https://cdn.zhou1028.cn/travel37.jpg">
+              <div class="gallery-img" style="background-image: url('https://cdn.zhou1028.cn/travel37.jpg');"></div>
             </div>
           </div>
 
@@ -368,7 +366,7 @@
     <!-- 板块四：项目成果与个人经历 -->
     <section class="panel panel-alt" id="projects">
       <div class="panel-inner">
-        <h2 class="panel-title">项目成果与经历</h2>
+        <h2 class="panel-title">个人项目成果与经历</h2>
         <div class="panel-body projects-body">
           <div class="proj-buttons">
             <button class="proj-btn proj-btn-left" id="btnProjects">项目成果</button>
@@ -424,7 +422,8 @@
       <div class="modal-body">
         <div class="modal-project-list">
           <div class="modal-project-item">
-            <span class="modal-project-label">项目一/RAG系统</span><span style="margin-left: 8px; font-size: 12px; color: rgba(0,0,0,0.4);">（请用电脑打开链接）</span>
+            <span class="modal-project-label">项目一/RAG系统</span>
+            <span style="float:right; font-size:12px; color:rgba(0,0,0,0.35); font-weight:normal;">请用电脑打开链接</span>
             <div class="modal-project-detail">
               <p>管理员登录：<a href="https://rag.zhou1028.cn/login" target="_blank">https://rag.zhou1028.cn/login</a></p>
               <p>管理员默认账号密码：<br>admin<br>wushipeng</p>
