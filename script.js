@@ -539,8 +539,10 @@ function closeLightbox() {
 document.querySelectorAll('.gallery-card').forEach(function(card) {
   card.addEventListener('click', function() {
     var src = card.dataset.src;
-    var label = card.querySelector('span').textContent;
-    if (src) openLightbox(src, label);
+    if (!src) return;
+    var labelEl = card.querySelector('span');
+    var label = labelEl ? labelEl.textContent : '';
+    openLightbox(src, label);
   });
 });
 
