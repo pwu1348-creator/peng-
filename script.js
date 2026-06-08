@@ -1,4 +1,4 @@
-// script.js — Peng 个人主页交互逻辑
+﻿// script.js — Peng 个人主页交互逻辑
 
 // ========== 元素引用 ==========
 const videoIntro = document.getElementById('video-intro');
@@ -553,3 +553,300 @@ if (lightbox) {
     }
   });
 }
+
+// ========== Peng homepage visual refresh ==========
+(function () {
+  const main = document.getElementById("main-content");
+  if (!main) return;
+
+  const chapters = [
+    { id: "hero", number: "00", label: "首页", en: "Opening Field" },
+    { id: "about", number: "01", label: "关于 Peng", en: "About Peng" },
+    { id: "hobbies", number: "02", label: "爱好性格", en: "Hobbies" },
+    { id: "dreams", number: "03", label: "梦想旅游", en: "Travel Works" },
+    { id: "projects", number: "04", label: "项目经历", en: "Projects" },
+    { id: "contact", number: "05", label: "联系方式", en: "Contact" },
+  ];
+
+  const sectionCopy = {
+    about: {
+      number: "01",
+      eyebrow: "自我介绍",
+      summary: "把技术、生活感和一点幽默放在同一个观测站里，先从认识 Peng 开始。",
+    },
+    hobbies: {
+      number: "02",
+      eyebrow: "性格与日常",
+      summary: "社交、游戏、羽毛球、旅行、音乐、AI，组成一个不太愿意被单一定义的人。",
+    },
+    dreams: {
+      number: "03",
+      eyebrow: "旅行作品集",
+      summary: "这里保留你的旅行照片墙和人生梦想清单，后续图片换成腾讯云地址就能直接上线。",
+    },
+    projects: {
+      number: "04",
+      eyebrow: "项目与经历",
+      summary: "项目成果、个人经历和感谢名单继续保留，用更克制的暗色编辑版式承载。",
+    },
+  };
+
+  function createCursorGlow() {
+    main.style.setProperty("--cursor-x", "58%");
+    main.style.setProperty("--cursor-y", "18%");
+  }
+
+  function createSideRail() {
+    if (main.querySelector(".astral-side-rail")) return;
+
+    const links = chapters
+      .map(
+        (item) => `
+          <a href="#${item.id}" data-section="${item.id}">
+            <span>${item.number}</span>
+            <b>${item.label}</b>
+          </a>
+        `,
+      )
+      .join("");
+
+    main.insertAdjacentHTML(
+      "afterbegin",
+      `
+        <aside class="astral-side-rail" aria-label="章节索引">
+          <a class="astral-side-rail__mark" href="#hero" aria-label="回到首页">
+            <span class="star-glyph star-glyph--large" aria-hidden="true"></span>
+          </a>
+          <div class="astral-side-rail__title">
+            <span>PENG</span>
+            <span>FIELD</span>
+          </div>
+          <nav class="astral-side-rail__nav">${links}</nav>
+          <div class="astral-side-rail__progress" aria-hidden="true"><i></i></div>
+          <small>© 2026 Peng Field</small>
+        </aside>
+      `,
+    );
+  }
+
+  function createConstellationMap() {
+    if (main.querySelector(".astral-map")) return;
+
+    const positions = [
+      { id: "hero", top: 90, left: 58 },
+      { id: "about", top: 520, left: 26 },
+      { id: "hobbies", top: 1010, left: 48 },
+      { id: "dreams", top: 1510, left: 34 },
+      { id: "projects", top: 2000, left: 62 },
+      { id: "contact", top: 2480, left: 44 },
+    ];
+
+    const nodes = positions
+      .map(
+        (node) =>
+          `<i class="astral-map__node" data-section="${node.id}" style="--node-top:${node.top}px; --node-left:${node.left}px"></i>`,
+      )
+      .join("");
+
+    main.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="astral-map" aria-hidden="true"><i class="astral-map__line"></i>${nodes}</div>`,
+    );
+  }
+
+  function enhanceNav() {
+    const nav = document.getElementById("mainNav");
+    if (!nav) return;
+
+    const brand = nav.querySelector(".nav-brand");
+    if (brand) {
+      brand.innerHTML = '<span class="star-glyph star-glyph--small" aria-hidden="true"></span><span>PENG FIELD</span>';
+    }
+
+    if (!nav.querySelector(".nav-contact")) {
+      nav.insertAdjacentHTML("beforeend", '<a class="nav-contact" href="#contact">建立连接 <span aria-hidden="true">→</span></a>');
+    }
+
+    if (!nav.querySelector(".nav-menu")) {
+      nav.insertAdjacentHTML(
+        "beforeend",
+        '<button class="nav-menu" type="button" aria-label="打开导航" aria-expanded="false"><span></span></button>',
+      );
+    }
+
+    if (!main.querySelector(".astral-mobile-menu")) {
+      const menuLinks = chapters
+        .map((item) => `<a href="#${item.id}"><span>${item.number}</span>${item.label}</a>`)
+        .join("");
+      nav.insertAdjacentHTML("afterend", `<div class="astral-mobile-menu">${menuLinks}</div>`);
+    }
+
+    const menuButton = nav.querySelector(".nav-menu");
+    const mobileMenu = main.querySelector(".astral-mobile-menu");
+    if (!menuButton || !mobileMenu) return;
+
+    menuButton.addEventListener("click", () => {
+      const open = mobileMenu.classList.toggle("is-open");
+      menuButton.classList.toggle("is-open", open);
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? "关闭导航" : "打开导航");
+    });
+
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.remove("is-open");
+        menuButton.classList.remove("is-open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "打开导航");
+      });
+    });
+  }
+
+  function enhanceHero() {
+    const hero = document.getElementById("hero");
+    if (!hero || hero.querySelector(".hero__content")) return;
+
+    hero.insertAdjacentHTML(
+      "beforeend",
+      `
+        <div class="hero__content">
+          <p class="kicker">AI Application Developer · Life Explorer</p>
+          <h1 id="hero-title">Peng<span>Field</span></h1>
+          <p class="hero__lead">
+            一个把 AI 应用开发、旅行照片、游戏日常、社交热情和自由生活愿望都收进来的个人观测站。
+          </p>
+          <div class="hero__actions">
+            <a class="ghost-button" href="#dreams">探索旅行作品 <span aria-hidden="true">→</span></a>
+            <a class="ghost-button" href="#projects">查看项目经历 <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div class="hero__meta" aria-label="状态">
+          <span>BASED IN NANJING</span>
+          <b>AI / TRAVEL / LIFE</b>
+        </div>
+        <div class="hero__chapter" aria-hidden="true">
+          <span>PENG INDEX</span>
+          <b>FIELD · 2026</b>
+        </div>
+        <a class="scroll-cue" href="#about"><span>SCROLL TO EXPLORE</span></a>
+      `,
+    );
+  }
+
+  function enhanceSections() {
+    Object.entries(sectionCopy).forEach(([id, info]) => {
+      const section = document.getElementById(id);
+      if (!section || section.querySelector(".section-meta")) return;
+
+      const title = section.querySelector(".panel-title");
+      if (!title) return;
+
+      title.insertAdjacentHTML(
+        "beforebegin",
+        `<div class="section-meta"><span class="section-number">${info.number}</span><span class="eyebrow">${info.eyebrow}</span></div>`,
+      );
+      title.insertAdjacentHTML("afterend", `<p class="section-summary">${info.summary}</p>`);
+    });
+  }
+
+  function enhanceFooter() {
+    const footer = document.querySelector(".main-footer");
+    if (!footer || footer.querySelector(".main-footer__inner")) return;
+
+    const title = footer.querySelector("h2");
+    const links = footer.querySelector(".footer-links");
+    const copy = footer.querySelector(".footer-copy");
+    const inner = document.createElement("div");
+    const left = document.createElement("div");
+    const right = document.createElement("div");
+
+    inner.className = "main-footer__inner";
+    right.className = "main-footer__side";
+
+    if (title) left.appendChild(title);
+    if (links) left.appendChild(links);
+    if (copy) right.appendChild(copy);
+
+    inner.appendChild(left);
+    inner.appendChild(right);
+    footer.appendChild(inner);
+  }
+
+  function setupLazyGallery() {
+    const cards = Array.from(document.querySelectorAll(".gallery-card"));
+    if (!cards.length) return;
+
+    const loadCard = (card) => {
+      const img = card.querySelector(".gallery-img");
+      if (!img || img.dataset.loaded === "true" || !card.dataset.src) return;
+      img.style.backgroundImage = `url("${card.dataset.src}")`;
+      img.dataset.loaded = "true";
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      cards.forEach(loadCard);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          loadCard(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "420px 0px", threshold: 0.01 },
+    );
+
+    cards.forEach((card) => observer.observe(card));
+  }
+
+  function updateProgressAndActive() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
+
+    const progressBar = main.querySelector(".astral-side-rail__progress i");
+    if (progressBar) progressBar.style.transform = `scaleY(${progress})`;
+
+    let activeId = chapters[0].id;
+    chapters.forEach((chapter) => {
+      const element = document.getElementById(chapter.id);
+      if (!element) return;
+      const top = element.getBoundingClientRect().top;
+      if (top < window.innerHeight * 0.42) activeId = chapter.id;
+    });
+
+    const activeIndex = chapters.findIndex((chapter) => chapter.id === activeId);
+
+    main.querySelectorAll("[data-section]").forEach((item) => {
+      const id = item.getAttribute("data-section");
+      const index = chapters.findIndex((chapter) => chapter.id === id);
+      item.classList.toggle("is-active", id === activeId);
+      item.classList.toggle("is-passed", index >= 0 && index < activeIndex);
+    });
+  }
+
+  function init() {
+    createCursorGlow();
+    createSideRail();
+    createConstellationMap();
+    enhanceNav();
+    enhanceHero();
+    enhanceSections();
+    enhanceFooter();
+    setupLazyGallery();
+    updateProgressAndActive();
+
+    window.addEventListener("scroll", updateProgressAndActive, { passive: true });
+    window.addEventListener("resize", updateProgressAndActive);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+
